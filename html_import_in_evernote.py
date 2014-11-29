@@ -19,6 +19,7 @@ I have found a lot of this code online. Feel free to use and improve it.
 
 Yours truly,
 
+
 Henk
 
 
@@ -26,6 +27,16 @@ Henk
 import subprocess
 import httplib
 from urlparse import urlparse
+
+import lxml.html
+
+
+def get_title(myurl):
+    try:
+        t = lxml.html.parse(myurl)
+        return t.find(".//title").text
+    except:
+        return "Just some text"
 
 
 def checkUrl(url):
@@ -115,7 +126,11 @@ def html_list_into_evernote(sourcefile, startline):
     # while cntr < 4: # i used this to test the code
         url = content[cntr][:-1]
         print url
-        title = "my title"
+
+        # title = "my title"
+
+        # encode('utf-8')
+        title = get_title(url).encode('utf-8')
 
         cntr += 1
 
